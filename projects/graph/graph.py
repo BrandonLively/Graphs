@@ -69,6 +69,27 @@ class Graph:
                 for neighbor in self.get_neighbors(v):
                     q.enqueue(neighbor)
 
+
+
+    def dfs(self, starting_vertex, destination_vertex):
+        s = Stack()
+        visited = set()
+        # Enqueue a PATH to the starting vertex
+        s.push([starting_vertex])
+        #Create a set to store the visited verticies
+        # while the queue is not empty..
+        while s.size() > 0:
+            path = s.pop()
+            last_vertex = path[-1]
+            if last_vertex not in visited:
+                visited.add(last_vertex)
+                if last_vertex == destination_vertex:
+                    return path
+                for neighbor in self.get_neighbors(last_vertex):
+                    next_path = path.copy()
+                    next_path.append(neighbor)
+                    s.push(next_path)
+
     def dfs_recursive(self, starting_vertex, destination_vertex, visited=None, path=None):
         """
         Return a list containing a path from
