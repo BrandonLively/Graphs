@@ -97,18 +97,17 @@ class Graph:
         depth-first order.
         This should be done using recursion.
         """
-        path.append(starting_vertex)
-        if len(path) == 0:
-            return None
+        path = path + [starting_vertex]
+        # if len(path) == 0:
+        #     return None
 
-        visited.add(path[-1])
+        visited.add(starting_vertex)
         if starting_vertex == destination_vertex:
             return path
 
         for neighbor in self.get_neighbors(starting_vertex):
             if neighbor not in visited:
-                next_path = path.copy()
-                new_path = self.dfs_recursive(neighbor, destination_vertex, visited, next_path)
+                new_path = self.dfs_recursive(neighbor, destination_vertex, visited, path)
                 if new_path is not None:
                     return new_path
 
@@ -143,14 +142,25 @@ class Graph:
                 for neighbor in self.get_neighbors(v):
                     s.push(neighbor)
 
-    def dft_recursive(self, starting_vertex, target_vertex, visited=set(), path=[]):
+    def dft_recursive(self, starting_vertex, visited=set(), path=[]):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
 ​
         This should be done using recursion.
         """
-        pass
+        path.append(starting_vertex)
+        if len(path) == 0:
+            return "boo"
+
+        visited.add(starting_vertex)
+
+        for neighbor in self.get_neighbors(starting_vertex):
+            if neighbor not in visited:
+                new_path = self.dft_recursive(neighbor, visited, path)
+                if new_path is not None:
+                    return new_path
+                return "bloe"
 
 
     def bfs(self, starting_vertex, destination_vertex):
@@ -177,6 +187,7 @@ class Graph:
                     next_path = path.copy()
                     next_path.append(neighbor)
                     q.enqueue(next_path)
+        return None
             # Dequeue the first PATH
             # Grab the vertex from the end of the path
             # Check if it's been viisited
@@ -230,7 +241,7 @@ if __name__ == '__main__':
         1, 2, 4, 3, 7, 6, 5
         1, 2, 4, 3, 7, 5, 6
     '''
-    graph.bft(1)
+    #graph.bft(1)
 
     '''
     Valid DFT paths:
@@ -239,19 +250,19 @@ if __name__ == '__main__':
         1, 2, 4, 7, 6, 3, 5
         1, 2, 4, 6, 3, 5, 7
     '''
-    graph.dft(1)
-    graph.dft_recursive(1)
+    #graph.dft(1)
+    print(graph.dft_recursive(1))
 
     '''
     Valid BFS path:
         [1, 2, 4, 6]
     '''
-    print(graph.bfs(1, 6))
+    #print(graph.bfs(1, 6))
 
     '''
     Valid DFS paths:
         [1, 2, 4, 6]
         [1, 2, 4, 7, 6]
     '''
-    print(graph.dfs(1, 6))
-    print(graph.dfs_recursive(1, 6))
+    #print(graph.dfs(1, 6))
+   # print(graph.dfs_recursive(1, 6))
